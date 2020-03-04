@@ -1,0 +1,12 @@
+[
+    {
+	"path" : "tree.tol",
+	"description" : "Full tree",
+	"author" : "jean.pierre@etu.umontpellier.fr"
+    },
+    {
+	"path" : "tree2.tol",
+	"description" : "Amphibian tree",
+	"author" : "claire.dupont@etu.umontpellier.fr"
+    }
+]

@@ -1,0 +1,34 @@
+[
+    {
+	"collection_name" : "collec1",
+	"content" :
+	[
+	    {
+		"taxon" : "AmbystomaMexicanum",
+		"images" : [
+		    {
+			"id" : 0,
+			"path" : "AmbystomaMexicanum_0.jpg"
+		    },
+		    {
+			"id" : 1,
+			"path" : "AmbystomaMexicanum_1.jpg"
+		    }
+		]
+	    },
+	    {
+		"taxon" : "FelisCatus",
+		"images" : [
+		    {
+			"id" : 0,
+			"path" : "FelisCatus_0.jpg"
+		    },
+		    {
+			"id" : 1,
+			"path" : "FelisCatus_1.jpg"
+		    }
+		]
+	    }
+	]
+    }
+]

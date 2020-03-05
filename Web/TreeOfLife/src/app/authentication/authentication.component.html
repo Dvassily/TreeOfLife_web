@@ -1,0 +1,14 @@
+<ng-container *ngIf="! (member | async)">
+  <form (ngSubmit)="onSubmit()">
+    <div *ngIf="invalidId === true">Identifiants invalides</div>
+    <label for="mail-address-input">Adresse e-mail</label>
+    <input id="mail-address-input" type="text" name="mail-address-input" required [(ngModel)]="mailAddress" />
+    <label for="password-input">Password</label>
+    <input id="password-input" type="password" name="password-input" required [(ngModel)]="password" />
+    <button id="authentication-submit" type="submit">Se connecter</button>
+  </form>
+</ng-container>
+<div *ngIf="member | async">
+  <span>Bonjour {{member.firstname}} {{member.name}} ! </span>
+  <a (click)="authenticationService.logOut(member)" routerLink=".">Se déconnecter</a>
+</div>

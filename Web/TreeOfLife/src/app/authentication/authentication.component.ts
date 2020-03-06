@@ -40,4 +40,8 @@ export class AuthenticationComponent implements OnInit {
 	this.invalidId = true;
     }
   }
+
+  logOut() : void {
+    this.authenticationService.logOut(this.member);
+  }
 }

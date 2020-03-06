@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "TreeOfLife": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "TreeOfLife"
+    }
+  },
+  "defaultProject": "TreeOfLife",
+  "cli": {
+    "analytics": "bf7bbdcc-7604-4f21-8878-9c87d6bcc995"
+  }
 }

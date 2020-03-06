@@ -9,6 +9,6 @@
   </form>
 </ng-container>
 <div *ngIf="member | async">
-  <span>Bonjour {{member.firstname}} {{member.name}} ! </span>
-  <a (click)="logOut(member)" routerLink=".">Se déconnecter</a>
+  <span>Bonjour {{firstname()}} {{name()}} ! </span>
+  <a (click)="logOut()" routerLink=".">Se déconnecter</a>
 </div>

@@ -42,6 +42,14 @@ export class AuthenticationComponent implements OnInit {
   }
 
   logOut() : void {
-    this.authenticationService.logOut(this.member);
+    this.authenticationService.logOut();
+  }
+
+  name(): void {
+    return this.member.value.name;
+  }
+
+  firstname() : void {
+    return this.member.value.firstname;
   }
 }

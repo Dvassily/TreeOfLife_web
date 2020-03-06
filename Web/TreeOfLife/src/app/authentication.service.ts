@@ -16,7 +16,7 @@ export class AuthenticationService {
     return this.http.get(AuthenticationService.dbUrl + 'members/' + mail + '/' + password);
   }
 
-  getMember() {
+  getMember() : Observable<any> {
     return this.member;
   }
 
@@ -24,7 +24,7 @@ export class AuthenticationService {
     this.member.next(member);
   }
 
-  logOut(member){
+  logOut(){
     this.member.next(undefined);
   }
 }

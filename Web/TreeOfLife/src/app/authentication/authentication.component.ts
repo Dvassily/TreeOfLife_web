@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-authentication',
@@ -11,7 +11,7 @@ export class AuthenticationComponent implements OnInit {
   invalidId : boolean = false;
   mailAddress : string = "";
   password : string = "";
-  member : Observable<any>;
+  member : BehaviorSubject<any>;
   
   constructor(private authenticationService : AuthenticationService) {
     this.member = this.authenticationService.getMember();
@@ -39,5 +39,17 @@ export class AuthenticationComponent implements OnInit {
     if (error.status === 404) {
 	this.invalidId = true;
     }
+  }
+
+  logOut() : void {
+    this.authenticationService.logOut();
+  }
+
+  name() : void {
+    return this.member.getValue().name;
+  }
+
+  firstname() : void {
+    return this.member.getValue().firstname;
   }
 }

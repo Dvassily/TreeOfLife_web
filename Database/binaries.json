@@ -2,11 +2,13 @@
     {
 	"path" : "tree.tol",
 	"description" : "Full tree",
-	"author" : "jean.pierre@etu.umontpellier.fr"
+	"author" : "jean.pierre@etu.umontpellier.fr",
+	"lastmodified" : "09/03/20 - 12:33"
     },
     {
 	"path" : "tree2.tol",
 	"description" : "Amphibian tree",
-	"author" : "claire.dupont@etu.umontpellier.fr"
+	"author" : "claire.dupont@etu.umontpellier.fr",
+	"lastmodified" : "25/02/20 - 17:35"
     }
 ]

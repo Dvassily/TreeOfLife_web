@@ -11,6 +11,10 @@ app.use(function(req, res, next) {
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectId;
 const url = "mongodb://localhost:27017";
+const dlOptions = {
+    root : __dirname + '/datas',
+    dotfiles: 'deny'
+};
 
 MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (err, client) => {
     let db = client.db("TOL");
@@ -47,6 +51,17 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	    console.log("Error on /binaries");
 	    res.end(JSON.stringify([]));
 	}
+    });
+
+    app.get("/binaries/:file", (req, res) => {
+	res.sendFile('binaries/' + req.params.file, dlOptions, function(err) {
+	    if (err) {
+		res.status(err.status);
+		res.end();
+	    } else {
+		console.log('Info: Sent binary /binaries/' + req.params.file);
+	    }
+	});
     });
 });
 

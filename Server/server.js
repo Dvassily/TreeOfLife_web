@@ -20,6 +20,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	
 	try {
 	    db.collection("members").find().toArray((err, documents) => {
+		console.log(documents);
 		for (let document of documents) {
 		    if (document.mail === req.params.mail && document.password === req.params.password) {
 			res.end(JSON.stringify(document));

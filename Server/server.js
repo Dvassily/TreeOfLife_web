@@ -34,6 +34,19 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	    res.end(JSON.stringify([]));
 	}
     });
+
+    app.get("/binaries", (req, res) => {
+	console.log("/binaries");
+
+	try {
+	    db.collection("binaries").find().toArray((err, documents) => {
+		res.end(JSON.stringify(documents));
+	    });
+	} catch (e) {
+	    console.log("Error on /binaries");
+	    res.end(JSON.stringify([]));
+	}
+    });
 });
 
 app.listen(8888);

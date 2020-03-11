@@ -12,7 +12,13 @@
   </form>
 </ng-container>
 <div *ngIf="member | async">
-  <h3><span>Bonjour {{firstname()}} {{name()}} ! </span>
-  <a (click)="logOut()" routerLink="." class="badge badge-secondary">Se déconnecter</a>
-  </h3>
+  <div class="row">
+    <div class="col-sm-10">
+    <h4><span>Bonjour {{firstname()}} {{name()}} ! </span></h4>
+    </div>
+    <div class="col-sm-2">
+      <h4><a (click)="logOut()" routerLink="." class="badge badge-secondary">Se déconnecter</a></h4>
+    </div>
+    
+  </div>
 </div>

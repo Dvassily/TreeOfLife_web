@@ -1,4 +1,21 @@
-<h1>Liste des abres</h1>
+<h2 class="bg-primary text-white">Liste des abres</h2>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>Fichier</th>
+      <th>Description</th>
+      <th>Auteur</th>
+      <th>Derniere modification</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let binary of binaries">
+    <td><a href="{{download(binary.path)}}">{{binary.path}}</a></td>
+    <td>{{binary.description}}</td>
+    <td>{{binary.author}}</td>
+    <td>{{binary.lastmodified}}</td>
+  </tbody>
+</table>
+<!----
 <table>
   <tr>
     <th>Fichier</th>
@@ -13,3 +30,4 @@
     <td>{{binary.lastmodified}}</td>
   </tr>
 </table>
+-->

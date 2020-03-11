@@ -1,14 +1,18 @@
 <ng-container *ngIf="! (member | async)">
   <form (ngSubmit)="onSubmit()">
-    <div *ngIf="invalidId === true">Identifiants invalides</div>
-    <label for="mail-address-input">Adresse e-mail</label>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <a class="navbar-brand" href="#">TreeOfLife</a>
+    <div *ngIf="invalidId === true" class="alert alert-danger" role="alert">Identifiants invalides</div>
+    <label for="mail-address-input" class="text-white" >Adresse e-mail</label>
     <input id="mail-address-input" type="text" name="mail-address-input" required [(ngModel)]="mailAddress" />
-    <label for="password-input">Password</label>
+    <label for="password-input" class="text-white">Password</label>
     <input id="password-input" type="password" name="password-input" required [(ngModel)]="password" />
-    <button id="authentication-submit" type="submit">Se connecter</button>
+    <button id="authentication-submit" type="submit" class="btn btn-primary">Se connecter</button>
+  </nav>
   </form>
 </ng-container>
 <div *ngIf="member | async">
-  <span>Bonjour {{firstname()}} {{name()}} ! </span>
-  <a (click)="logOut()" routerLink=".">Se déconnecter</a>
+  <h3><span>Bonjour {{firstname()}} {{name()}} ! </span>
+  <a (click)="logOut()" routerLink="." class="badge badge-secondary">Se déconnecter</a>
+  </h3>
 </div>

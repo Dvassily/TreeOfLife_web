@@ -1,31 +1,32 @@
 [
     {
-	"collection_name" : "collec1",
+	"collection_name" : "distantcollection_1",
 	"content" :
 	[
 	    {
-		"taxon" : "AmbystomaMexicanum",
+		"taxon" : "Homo sapiens",
 		"images" : [
 		    {
+			"id" : -1,
+			"file" : "Homo sapiens.jpg"
+		    }, {
 			"id" : 0,
-			"path" : "AmbystomaMexicanum_0.jpg"
-		    },
-		    {
+			"file" : "Homo sapiens_0.jpg"
+		    }, {
 			"id" : 1,
-			"path" : "AmbystomaMexicanum_1.jpg"
+			"file" : "Homo sapiens_1.jpg"
 		    }
 		]
 	    },
 	    {
-		"taxon" : "FelisCatus",
+		"taxon" : "Felis silvestris catus",
 		"images" : [
 		    {
+			"id" : -1,
+			"file" : "Felis silvestris catus.jpg"
+		    }, {
 			"id" : 0,
-			"path" : "FelisCatus_0.jpg"
-		    },
-		    {
-			"id" : 1,
-			"path" : "FelisCatus_1.jpg"
+			"file" : "Felis silvestris catus_0.jpg"
 		    }
 		]
 	    }

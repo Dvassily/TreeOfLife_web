@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-inscription',
   templateUrl: './inscription.component.html',
@@ -21,20 +23,20 @@ export class InscriptionComponent implements OnInit {
     const prenom = target.querySelector('#Prenom').value
     const email = target.querySelector('#Email').value
     const mdp = target.querySelector('#Motdepasse').value
-    //const cmdp = target.querySelector('#CMotdepasse').value
-/*
+    const cmdp = target.querySelector('#CMotdepasse').value
+
     if(mdp != cmdp){
       console.error("les mots de passe sont differents");
       errors.push("Les mots de passe sont differents")      
-    }*/
+    }else{
     if(errors.length === 0){
       this.auth.inscriptionUser(nom,prenom,email,mdp).subscribe(data =>{
         console.log(data)
         
-       // this.router.navigate(['/app'])
+        //this.router.navigate(['http://localhost:8888/binaries'])
       
       })
-    }
+    }}
     console.log(nom,prenom,email,mdp)
   }
 }

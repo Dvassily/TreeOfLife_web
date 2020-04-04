@@ -1,22 +1,11 @@
-const buildr = require('xmlbuilder');
+const unzip = require('unzip');
 const express = require('express');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const _ = require('lodash');
 const app = express();
-
-function formatCollectionXML(collection) {
-    let doc = builder.create('ArrayOfImageLink')
-	.att("xmlns:xsd", "http://www.w3.org/2001/XMLSchema")
-	.att("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-
-    for (let taxon of collection) {
-	let taxonName = taxon.taxon;
-
-	for (let image of taxon['images']) {
-	    doc = doc
-		.elt('ImageLink')
-		.att('Key', taxonName)
-	}
-    }
-}
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,6 +13,15 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', '*');
     next();
 });
+
+app.use(fileUpload({
+    createParentPath : true
+}));
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectId;
@@ -180,6 +178,96 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 	} catch (e) {
 	    console.log("Error on /images/" + req.params.collection);
 	    res.end(JSON.stringify([]));
+	}
+    });
+
+    app.get('/appdata/:file', (req, res) => {
+	res.sendFile('appdata/' + req.params.file, dlOptions, function (err) {
+	    if (err) {
+		res.status(err.status);
+		res.end();
+	    } else {
+		console.log('Info: Sent binary /appdata/' + req.params.file);
+	    }
+	});
+    });
+
+    app.get("/comments/:collection", (req, res) => {
+	try {
+	    db.collection("comments").find().toArray((err, collections) => {
+		let collection_found = false;
+		
+		for (let collection of collections) {
+		    console.log(collection);
+		    if (collection.collection_name === req.params.collection) {
+			collection_found = true;
+
+			res.end(JSON.stringify(collection.content));
+		    }
+		}
+
+		if (! collection_found) {
+		    res.status(404);
+		    res.end();
+		}
+	    });
+	} catch (e) {
+	    console.log("Error on /comments/" + req.params.collection);
+	    res.end(JSON.stringify([]));
+	}
+    });
+
+    app.get("/comments/:collection/:taxon", (req, res) => {
+    	try {
+    	    db.collection("comments").find().toArray((err, collections) => {
+    		let collection_found = false;
+    		let taxon_found = false;
+		
+    		for (let collection of collections) {
+    		    if (collection.collection_name === req.params.collection) {
+    			collection_found = true;
+
+    			for (let entry of collection.content) {
+    			    if (entry.taxon === req.params.taxon) {
+    				taxon_found = true;
+				
+    				res.sendFile('comments/' + collection.collection_name + "/" + entry.file, dlOptions, function (err) {
+    				    if (err) {
+    					res.status(err.status);
+    					res.end(JSON.stringify(err));
+    				    } else {
+    					console.log('Info: Sent binary /comments/' + req.params.collection + "/" + req.params.file);
+    				    }
+    				});
+    			    }
+    			}
+    		    }
+    		}
+
+    		if (! collection_found || ! taxon_found) {
+    		    res.status(404);
+    		    res.end();
+    		}
+    	    });
+    	} catch (e) {
+    	    console.log("Error on /comments/" + req.params.collection);
+    	    res.end(JSON.stringify([]));
+    	}
+    });
+
+    app.get("/comments/:collection/:taxon/:file", (req, res) => {
+	console.log("foo");
+	try {
+	    res.sendFile('comments/' + req.params.collection + "/" + req.params.taxon + "/" + req.params.file, dlOptions, function (err) {
+		if (err) {
+		    res.status(err.status);
+		    res.end(JSON.stringify(err));
+		} else {
+		    console.log('Info: Sent binary /binaries/' + req.params.file);
+		}
+	    });
+	} catch (err) {
+	    res.end(JSON.stringify(err));
 	}
     });
 });

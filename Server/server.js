@@ -62,7 +62,27 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 		console.log('Info: Sent binary /binaries/' + req.params.file);
 	    }
 	});
-    });
+	});
+	
+	app.get("/inscriptions/:nom/:prenom/:email/:mdp", (req, res)=>{
+		console.log("/inscriptions/" + req.params.email + "/" + req.params.mdp);
+		try{
+			db.collection("members").insertOne({
+	 			mail : req.params.email,
+				name : req.params.nom,
+				firstname : req.params.prenom,
+				password : req.params.mdp
+		});		
+			console.log("client inserer")
+		res.end(JSON.stringify([]));
+
+		}catch(e){
+
+			console.log("Error with inscriptions/");
+			res.end(JSON.stringify([]));
+		}
+
+	} );
 });
 
 app.listen(8888);

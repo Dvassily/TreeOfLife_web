@@ -7,19 +7,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BinariesComponent } from './binaries/binaries.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { InscriptionComponent } from './inscription/inscription.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     BinariesComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    InscriptionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    RouterModule.forRoot([
+      {
+        path: 'inscription',
+        component: InscriptionComponent
+
+      }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

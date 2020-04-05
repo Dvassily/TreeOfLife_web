@@ -33,7 +33,7 @@ export class InscriptionComponent implements OnInit {
       this.auth.inscriptionUser(nom,prenom,email,mdp).subscribe(data =>{
         console.log(data)
         
-        //this.router.navigate(['http://localhost:8888/binaries'])
+        //this.router.navigate(['http://localhost:4200/binaries'])
       
       })
     }}

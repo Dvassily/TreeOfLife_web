@@ -262,7 +262,7 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 		    res.status(err.status);
 		    res.end(JSON.stringify(err));
 		} else {
-		    console.log('Info: Sent image /comments/' + req.params.collection + "/" + req.params.taxon + "/" + req.params.file);
+		    console.log('Info: Sent binary /binaries/' + req.params.file);
 		}
 	    });
 	} catch (err) {
@@ -272,17 +272,8 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 
     app.get("/sounds/:taxon", (req, res) => {
 	try {
-	    res.sendFile('sounds/' + req.params.taxon + ".wma", dlOptions, function (err) {
-		if (err) {
-		    res.status(err.status);
-		    res.end(JSON.stringify(err));
-		} else {
-		    console.log('Info: Sent sound /sounds/' + req.params.taxon + ".wma");
-		}
-	    });
+	    res.sendFile('sounds/' + req.);
 	} catch (err) {
-	    console.log(err);
-	    res.status(500);
 	    res.end(JSON.stringify(err));
 	}
     });

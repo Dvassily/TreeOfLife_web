@@ -28,6 +28,9 @@
     <div>    
         <button id="inscription-submit" type="submit" class="btn btn-warning">Inscription</button>
     </div> 
-        
+    <div *ngIf = "inscrit === true" class="alert alert-success">Votre inscription a bien été enregistré!
+    </div>
+    <div *ngIf = "mdpDiff === true" class="alert alert-danger">Les mots de passes sont differentes</div>
+    <div *ngIf = "existsMail === true" class="alert alert-danger">Le mail existe déjà</div>
     </div>
 </form>

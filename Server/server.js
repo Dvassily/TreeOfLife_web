@@ -65,7 +65,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	});
 	
 	app.get("/inscriptions/:nom/:prenom/:email/:mdp", (req, res)=>{
-		let Existsmail = false;
+		var notExistsmail = true;
 
 		console.log("/inscriptions/" + req.params.email + "/" + req.params.mdp);
 		try{
@@ -73,15 +73,18 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 				//console.log(documents);
 				for (let document of documents) {
 					if (document.mail === req.params.email) {
-					Existsmail = true;
+					notExistsmail = false;
 					console.log("Le mail existe deja");
+					res.json({
+						success: false
+					});
 					res.status(404);
-					res.end(JSON.stringify({}));
+					res.end();
 					}
 				}
 				
 
-				if(!Existsmail){
+				if(notExistsmail){
 					try{
 						db.collection("members").insertOne({
 							mail : req.params.email,
@@ -89,8 +92,11 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 							firstname : req.params.prenom,
 							password : req.params.mdp
 					});		
-						console.log("client inserer")
-					res.end(JSON.stringify([]));
+						console.log("client inserer");
+						res.json({
+							success: true
+						});
+						res.end(req.params);
 			
 					}catch(e){
 			

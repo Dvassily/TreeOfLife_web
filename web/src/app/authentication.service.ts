@@ -31,8 +31,8 @@ export class AuthenticationService {
     this.member.next(undefined);
   }
   inscriptionUser(nom,prenom,email,mdp){
-    return this.http.get(AuthenticationService.dbUrl + 'inscriptions' + '/' +nom + '/' + prenom + '/' + email + '/' + mdp);
-/*
+    return this.http.get<inscriptionResponse>(AuthenticationService.dbUrl + 'inscriptions' + '/' +nom + '/' + prenom + '/' + email + '/' + mdp);
+    /*
     return this.http.post<inscriptionResponse>('api/inscription',{
       nom,
       prenom,

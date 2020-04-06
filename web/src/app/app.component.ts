@@ -1,0 +1,18 @@
+import { AuthenticationService } from './authentication.service';
+import { Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'web';
+
+  member : BehaviorSubject<any>;
+
+  constructor(private authenticationService : AuthenticationService) {
+    this.member = this.authenticationService.getMember();
+  }
+}

@@ -1,0 +1,36 @@
+<form (submit) = "inscriptionrUser($event)">
+    <div class="container">    
+        
+    <div>
+        <input id="Nom" type="text" placeholder="Nom">
+    </div>
+
+    <div>
+        <input id="Prenom" type="text" placeholder="Prenom">
+    </div>
+    
+    <div >
+        <input id="Email" type="text" placeholder="E-mail" name="mail-address-input"  />
+            
+    </div>
+    
+    <div>
+        <input id="Motdepasse" type="password" placeholder="Mot de passe" name="password-input" />
+        
+    </div>
+    
+    
+    <div>
+        <input id="CMotdepasse" type="password" placeholder="Confirmer mot de passe" name="password-input"  />
+        
+    </div>
+    
+    <div>    
+        <button id="inscription-submit" type="submit" class="btn btn-warning">Inscription</button>
+    </div> 
+    <div *ngIf = "inscrit === true" class="alert alert-success">Votre inscription a bien été enregistré!
+    </div>
+    <div *ngIf = "mdpDiff === true" class="alert alert-danger">Les mots de passes sont differentes</div>
+    <div *ngIf = "existsMail === true" class="alert alert-danger">Le mail existe déjà</div>
+    </div>
+</form>

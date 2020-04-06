@@ -1,4 +1,3 @@
-const unzip = require('unzip');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
@@ -27,51 +26,44 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectId;
 const url = "mongodb://localhost:27017";
 const dlOptions = {
-    root: __dirname + '/datas',
+    root : __dirname + '/datas',
     dotfiles: 'deny'
 };
 
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+
+app.use(fileUpload({
+    createParentPath : true
+}));
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
+
+
+MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (err, client) => {
     let db = client.db("TOL");
 
     app.get("/members/:mail/:password", (req, res) => {
+	console.log("/members/" + req.params.mail + "/" + req.params.password);
+	
+	try {
+	    db.collection("members").find().toArray((err, documents) => {
+		console.log(documents);
+		for (let document of documents) {
+		    if (document.mail === req.params.mail && document.password === req.params.password) {
+			res.end(JSON.stringify(document));
+		    }
+		}
 
+		res.status(404);
+		res.end(JSON.stringify({}));
+	    });
+	} catch (e) {
+	    console.log("Error on /members/:mail/:password : " + e);
+	    res.end(JSON.stringify([]));
+	}
     });
-
-
-    app.get("/auth/register", (req, res) => {
-
-	try {
-	    db.collection("members").find().toArray((err, documents) => {
-		for (let document of documents) {
-		    if (document.mail === req.params.mail && document.password === req.params.password) {
-			// return user already exist
-		    }
-		}
-
-		// save user
-	    });
-	} catch (e) {
-	    res.end(JSON.stringify([]));
-	}
-    })
-
-
-    app.get("/auth/login", (req, res) => {
-	try {
-	    db.collection("members").find().toArray((err, documents) => {
-		for (let document of documents) {
-		    if (document.mail === req.params.mail && document.password === req.params.password) {
-			// return user already exist
-		    }
-		}
-
-		// save user
-	    });
-	} catch (e) {
-	    res.end(JSON.stringify([]));
-	}
-    })
 
     app.get("/binaries", (req, res) => {
 	console.log("/binaries");
@@ -87,7 +79,7 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
     });
 
     app.get("/binaries/:file", (req, res) => {
-	res.sendFile('binaries/' + req.params.file, dlOptions, function (err) {
+	res.sendFile('binaries/' + req.params.file, dlOptions, function(err) {
 	    if (err) {
 		res.status(err.status);
 		res.end();
@@ -95,8 +87,52 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 		console.log('Info: Sent binary /binaries/' + req.params.file);
 	    }
 	});
-    });
+	});
+	
+	app.get("/inscriptions/:nom/:prenom/:email/:mdp", (req, res)=>{
+		let Existsmail = false;
 
+		console.log("/inscriptions/" + req.params.email + "/" + req.params.mdp);
+		try{
+			db.collection("members").find().toArray((err, documents) => {
+				//console.log(documents);
+				for (let document of documents) {
+					if (document.mail === req.params.email) {
+					Existsmail = true;
+					console.log("Le mail existe deja");
+					res.status(404);
+					res.end(JSON.stringify({}));
+					}
+				}
+				
+
+				if(!Existsmail){
+					try{
+						db.collection("members").insertOne({
+							mail : req.params.email,
+							name : req.params.nom,
+							firstname : req.params.prenom,
+							password : req.params.mdp
+					});		
+						console.log("client inserer")
+					res.end(JSON.stringify([]));
+			
+					}catch(e){
+			
+						console.log("Error with inscriptions/");
+						res.end(JSON.stringify([]));
+					}
+				}
+			});
+
+		
+		} catch (e) {
+	    	    console.log("Error on /members/:mail/:password : " + e);
+	    	    res.end(JSON.stringify([]));
+		}
+	});
+
+    
     app.get("/images/:collection", (req, res) => {
 	try {
 	    db.collection("images").find().toArray((err, collections) => {

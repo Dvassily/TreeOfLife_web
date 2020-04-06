@@ -1,3 +1,6 @@
-/Server/node_modules/*
-/Server/datas/images/*
-/Server/datas/sounds/*
+/server/node_modules/*
+/server/datas/images/*
+/server/datas/sounds/*
+/server/datas/comments/*
+/server/node_modules/
+/node_modules/

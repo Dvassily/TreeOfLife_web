@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BinariesComponent } from './binaries/binaries.component';
+import { BinariesComponent } from './pages/binaries/binaries.component';
 
 const routes: Routes = [{
   path : '',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BinariesService } from '../binaries.service';
+import { BinariesService } from '../../services/binaries.service';
 
 @Component({
   selector: 'app-binaries',
@@ -8,7 +8,7 @@ import { BinariesService } from '../binaries.service';
 })
 export class BinariesComponent implements OnInit {
   binaries : any = [];
-  
+
   constructor(private binariesService : BinariesService) { }
 
   ngOnInit(): void {
@@ -16,7 +16,7 @@ export class BinariesComponent implements OnInit {
       this.binaries = binaries;
     });
   }
-  
+
   download(file): string {
     return this.binariesService.binaryUrl(file);
   }

@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BinariesComponent } from './binaries/binaries.component';
-import { AuthenticationComponent } from './authentication/authentication.component';
-import { InscriptionComponent } from './inscription/inscription.component';
+import { BinariesComponent } from './pages/binaries/binaries.component';
+import { AuthenticationComponent } from './pages/authentication/authentication.component';
+import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { RouterModule } from '@angular/router';
+import {AuthenticationService} from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,16 @@ import { RouterModule } from '@angular/router';
       }
     ])
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private authService: AuthenticationService) {
+    const token = localStorage.getItem('token');
+
+    this.authService.getUser(token).subscribe(res => {
+      this.authService.user.next(res);
+    });
+  }
+}

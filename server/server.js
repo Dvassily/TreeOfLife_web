@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectId;
-let passport = require("passport");
 const _ = require('lodash');
 
 let jwt = require("jsonwebtoken");
@@ -29,8 +28,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('datas'));
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.json())
 app.use(morgan('dev'));
 
@@ -70,13 +67,47 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 
 
     // auth and login
+
+
+	app.get("/user", async (req, res) => {
+
+		try{
+			const mail = await jwt.verify(req.query.accessToken, "e1231");
+
+			db.collection("members").find({
+				mail,
+			}).toArray((err, documents) => {
+
+				if(err) {
+					console.log("Error on /user : " + e);
+					res.status(500);
+					return res.end(JSON.stringify([{"error": "Unknown error while retriving user"}]));
+				}
+
+				if(documents.length <= 0) {
+					console.log("Invalid access Token /user")
+					res.status(404);
+					return res.end(JSON.stringify({"error": "Invalid access Token"}));
+				}
+
+				res.status(200);
+				res.end(JSON.stringify(documents[0]));
+			})
+
+		} catch (e) {
+			console.log("Error on /user : " + e);
+			res.end(JSON.stringify([{"error": "Unknown error while doing retriving user"}]));
+		}
+	})
+
+
 	app.post("/auth/login", (req, res) => {
-		const email = req.body.email;
+		const mail = req.body.mail;
 		const password = req.body.password;
 
 		try{
 			db.collection("members").find({
-				mail: email,
+				mail: mail,
 			}).toArray((err, documents) => {
 
 				if(err) {
@@ -93,7 +124,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 					return res.end(JSON.stringify({"error": "Email or password Incorrect"}));
 				}
 
-				const accessToken = jwt.sign(email, "e1231")
+				const accessToken = jwt.sign(mail, "e1231")
 				res.end(JSON.stringify({
 					accessToken,
 				}));
@@ -107,13 +138,13 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 
 
 	app.post("/auth/register", (req, res) => {
-		const email = req.body.email;
+		const mail = req.body.mail;
 		const password = req.body.password;
 
 
 		try{
 			db.collection("members").find({
-				mail: email,
+				mail: mail,
 			}).toArray((err, documents) => {
 
 				if(documents.length > 0) {
@@ -123,12 +154,12 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 				}
 
 				db.collection("members").insertOne({
-					mail : req.body.email,
+					mail : req.body.mail,
 					password : req.body.password,
 
 				});
 
-				const accessToken = jwt.sign(req.body.email, "e1231")
+				const accessToken = jwt.sign(mail, "e1231")
 				res.end(JSON.stringify({
 					accessToken,
 				}));

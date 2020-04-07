@@ -65,6 +65,17 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 		});
 	});
 
+    app.get("/TreeOfLife.exe", (req, res) => {
+		res.sendFile('/bin/TreeOfLife.exe', dlOptions, function(err) {
+			if (err) {
+			    res.status(err.status);
+			    res.end();
+			} else {
+			    console.log('Info: Sent binary /bin/TreeOfLife.exe');
+			}
+		});
+	});
+
 
     // auth and login
 

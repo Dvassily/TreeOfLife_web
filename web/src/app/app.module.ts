@@ -40,8 +40,12 @@ export class AppModule {
   constructor(private authService: AuthenticationService) {
     const token = localStorage.getItem('token');
 
-    this.authService.getUser(token).subscribe(res => {
-      this.authService.user.next(res);
-    });
+    if(token) {
+      this.authService.getUser(token).subscribe(res => {
+
+        this.authService.user.next(res);
+      });
+    }
+
   }
 }

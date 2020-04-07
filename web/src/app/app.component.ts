@@ -1,4 +1,4 @@
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './services/authentication.service';
 import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -10,9 +10,9 @@ import { BehaviorSubject } from 'rxjs';
 export class AppComponent {
   title = 'web';
 
-  member : BehaviorSubject<any>;
+  user: BehaviorSubject<any>;
 
-  constructor(private authenticationService : AuthenticationService) {
-    this.member = this.authenticationService.getMember();
+  constructor(private authenticationService: AuthenticationService) {
+    this.user = this.authenticationService.user;
   }
 }

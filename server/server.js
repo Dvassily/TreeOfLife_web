@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectId;
 const _ = require('lodash');
+const multer = require('multer');
 
 let jwt = require("jsonwebtoken");
 
@@ -371,7 +372,21 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	    res.status(500);
 	    res.end(JSON.stringify(err));
 	}
-    });
+	});
+	
+	let upload  = multer({dest:'datas/binaires/'})
+
+	app.post('/file',upload.single('file'), (req, res, next) => {
+		const file = req.file
+		console.log("server file");
+		console.log(file);
+		if(!file){
+			const error = new Error("Please upload a file")
+			error.httpStatusCode = 400
+			return next(error)
+		}
+		res.send(file);
+	});
 
     app.get("/sounds", (req, res) => {
 	console.log("/sounds");

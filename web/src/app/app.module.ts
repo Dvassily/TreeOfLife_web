@@ -10,13 +10,15 @@ import { AuthenticationComponent } from './pages/authentication/authentication.c
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { RouterModule } from '@angular/router';
 import {AuthenticationService} from './services/authentication.service';
+import { UploadComponent } from './pages/upload/upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BinariesComponent,
     AuthenticationComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

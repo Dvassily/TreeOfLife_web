@@ -391,7 +391,6 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	    res.end(JSON.stringify([]));
 	}
     });
-
 });
 
 app.listen(8888);

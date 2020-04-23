@@ -373,6 +373,25 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	}
     });
 
+    app.get("/sounds", (req, res) => {
+	console.log("/sounds");
+
+	try {
+	    db.collection("sounds").find().toArray((err, documents) => {
+		let result = [];
+
+		for (let document of documents) {
+		    result.push(document.name);
+		}
+		
+		res.end(JSON.stringify(result));
+	    });
+	} catch (e) {
+	    console.log("Error on /sounds");
+	    res.end(JSON.stringify([]));
+	}
+    });
+
 });
 
 app.listen(8888);

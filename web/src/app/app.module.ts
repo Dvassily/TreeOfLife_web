@@ -44,7 +44,6 @@ export class AppModule {
 
     if(token) {
       this.authService.getUser(token).subscribe(res => {
-
         this.authService.user.next(res);
       });
     }

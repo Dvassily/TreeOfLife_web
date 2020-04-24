@@ -1,14 +1,16 @@
 [
-    {
-	"mail" : "jean.pierre@umontpellier.fr",
-	"name" : "Pierre",
-	"firstname" : "Jean",
-	"password" : "jpjp01"
-    },
-    {
-	"mail" : "claire.dupont@umontpellier.fr",
-	"name" : "Dupont",
-	"firstname" : "Claire",
-	"password" : "cdcd02"
-    }
+  {
+    "mail": "jean.pierre@umontpellier.fr",
+    "name": "Pierre",
+    "firstname": "Jean",
+    "password": "jpjp01",
+    "role": "enseignant"
+  },
+  {
+    "mail": "claire.dupont@umontpellier.fr",
+    "name": "Dupont",
+    "firstname": "Claire",
+    "password": "cdcd02",
+    "role": "enseignant"
+  }
 ]

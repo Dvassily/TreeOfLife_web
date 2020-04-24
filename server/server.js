@@ -55,6 +55,44 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 		}
     });
 
+    app.get("/user-binaries", async (req, res) => {
+
+        const mail = await jwt.verify(req.query.accessToken, "e1231");
+
+        db.collection("members").find({
+            mail,
+        }).toArray((err, documents) => {
+
+            if(err) {
+                console.log("Error on /user : " + e);
+                res.status(500);
+                return res.end(JSON.stringify([{"error": "Unknown error while retriving user"}]));
+            }
+
+            if(documents.length <= 0) {
+                console.log("Invalid access Token /user")
+                res.status(404);
+                return res.end(JSON.stringify({"error": "Invalid access Token"}));
+            }
+
+            let user = documents[0];
+
+
+            db.collection("binaries").find({
+                author: {$in: [user.mail, 'global@mtp.com']},
+            }).toArray((err, doc) => {
+                if(err) {
+                    console.log("Error on /user-binaries : " + e);
+                    res.status(500);
+                    return res.end(JSON.stringify([{"error": "Unknown error while retriving user-binaries"}]));
+                }
+
+                res.status(200);
+                res.end(JSON.stringify(doc))
+            })
+        });
+    })
+
     app.get("/binaries/:file", (req, res) => {
 		res.sendFile('binaries/' + req.params.file, dlOptions, function(err) {
 			if (err) {
@@ -168,7 +206,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 				db.collection("members").insertOne({
 					mail : req.body.mail,
 					password : req.body.password,
-
+                    role : "etudiant"
 				});
 
 				const accessToken = jwt.sign(mail, "e1231")
@@ -183,12 +221,12 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 		}
 	});
 
-    
+
     app.get("/images/:collection", (req, res) => {
 	try {
 	    db.collection("images").find().toArray((err, collections) => {
 		let collection_found = false;
-		
+
 		for (let collection of collections) {
 		    if (collection.collection_name === req.params.collection) {
 			collection_found = true;
@@ -214,7 +252,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 		let collection_found = false;
 		let taxon_found = false;
 		let image_found = false;
-		
+
 		for (let collection of collections) {
 		    if (collection.collection_name === req.params.collection) {
 			collection_found = true;
@@ -283,7 +321,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	try {
 	    db.collection("comments").find().toArray((err, collections) => {
 		let collection_found = false;
-		
+
 		for (let collection of collections) {
 		    console.log(collection);
 		    if (collection.collection_name === req.params.collection) {
@@ -309,7 +347,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
     	    db.collection("comments").find().toArray((err, collections) => {
     		let collection_found = false;
     		let taxon_found = false;
-		
+
     		for (let collection of collections) {
     		    if (collection.collection_name === req.params.collection) {
     			collection_found = true;
@@ -317,7 +355,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
     			for (let entry of collection.content) {
     			    if (entry.taxon === req.params.taxon) {
     				taxon_found = true;
-				
+
     				res.sendFile('comments/' + collection.collection_name + "/" + entry.file, dlOptions, function (err) {
     				    if (err) {
     					res.status(err.status);
@@ -373,7 +411,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	    res.end(JSON.stringify(err));
 	}
 	});
-	
+
 	let upload  = multer({dest:'datas/binaires/'})
 
 	app.post('/file',upload.single('file'), (req, res, next) => {

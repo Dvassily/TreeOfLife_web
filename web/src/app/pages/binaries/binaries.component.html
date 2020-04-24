@@ -6,27 +6,56 @@
   </div>
 </div>
 
-<h2 class="bg-success text-white">Liste des abres</h2>
-<table class="table">
-  <thead class="thead-success">
+<!-- etudiant -->
+<div *ngIf="user && user.role == 'etudiant'">
+  <h2 class="bg-success text-white">Liste des abres</h2>
+  <table class="table">
+    <thead class="thead-success">
     <tr>
       <th>Fichier</th>
       <th>Description</th>
       <th>Auteur</th>
       <th>Derniere modification</th>
     </tr>
-  </thead>
-  <tbody *ngFor="let binary of binaries">
+    </thead>
+    <tbody *ngFor="let binary of userBinaries">
     <td><a href="{{download(binary.path)}}">{{binary.path}}</a></td>
     <td>{{binary.description}}</td>
     <td>{{binary.author}}</td>
     <td>{{binary.lastmodified}}</td>
-  </tbody>
-</table>
-<br>
-<div>
-  <app-upload></app-upload>
+    </tbody>
+  </table>
+  <br>
+  <div>
+    <app-upload></app-upload>
+  </div>
 </div>
+
+<!-- etudiant -->
+<div *ngIf="user && user.role == 'enseignant'">
+  <h2 class="bg-success text-white">Liste des abres</h2>
+  <table class="table">
+    <thead class="thead-success">
+    <tr>
+      <th>Fichier</th>
+      <th>Description</th>
+      <th>Auteur</th>
+      <th>Derniere modification</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let binary of binaries">
+    <td><a href="{{download(binary.path)}}">{{binary.path}}</a></td>
+    <td>{{binary.description}}</td>
+    <td>{{binary.author}}</td>
+    <td>{{binary.lastmodified}}</td>
+    </tbody>
+  </table>
+  <br>
+  <div>
+    <app-upload></app-upload>
+  </div>
+</div>
+
 
 <!----
 <table>

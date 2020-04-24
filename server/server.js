@@ -9,7 +9,7 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectId;
 const _ = require('lodash');
 const multer = require('multer');
-
+const fs = require('fs')
 let jwt = require("jsonwebtoken");
 
 
@@ -26,10 +26,10 @@ app.use(fileUpload({
 }));
 
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({limit: '400mb', extended: true}));
 app.use(express.static('datas'));
-app.use(bodyParser.json());
-app.use(express.json())
+app.use(bodyParser.json({limit: '400mb'}));
+app.use(express.json());
 app.use(morgan('dev'));
 
 const dlOptions = {
@@ -70,7 +70,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
             }
 
             if(documents.length <= 0) {
-                console.log("Invalid access Token /user")
+                console.log("Invalid access Token /user");
                 res.status(404);
                 return res.end(JSON.stringify({"error": "Invalid access Token"}));
             }
@@ -91,7 +91,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
                 res.end(JSON.stringify(doc))
             })
         });
-    })
+    });
 
     app.get("/binaries/:file", (req, res) => {
 		res.sendFile('binaries/' + req.params.file, dlOptions, function(err) {
@@ -135,7 +135,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 				}
 
 				if(documents.length <= 0) {
-					console.log("Invalid access Token /user")
+					console.log("Invalid access Token /user");
 					res.status(404);
 					return res.end(JSON.stringify({"error": "Invalid access Token"}));
 				}
@@ -148,7 +148,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 			console.log("Error on /user : " + e);
 			res.end(JSON.stringify([{"error": "Unknown error while doing retriving user"}]));
 		}
-	})
+	});
 
 
 	app.post("/auth/login", (req, res) => {
@@ -169,12 +169,12 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 				if(documents.length <= 0 || documents[0].password != password) {
 
 
-					console.log("Email or password Incorrect")
+					console.log("Email or password Incorrect");
 					res.status(404);
 					return res.end(JSON.stringify({"error": "Email or password Incorrect"}));
 				}
 
-				const accessToken = jwt.sign(mail, "e1231")
+				const accessToken = jwt.sign(mail, "e1231");
 				res.end(JSON.stringify({
 					accessToken,
 				}));
@@ -198,7 +198,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 			}).toArray((err, documents) => {
 
 				if(documents.length > 0) {
-					console.log("Email already exist in database")
+					console.log("Email already exist in database");
 					res.status(404);
 					return res.end(JSON.stringify({"error": "Email already exist in database"}));
 				}
@@ -209,7 +209,7 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
                     role : "etudiant"
 				});
 
-				const accessToken = jwt.sign(mail, "e1231")
+				const accessToken = jwt.sign(mail, "e1231");
 				res.end(JSON.stringify({
 					accessToken,
 				}));
@@ -221,6 +221,41 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 		}
 	});
 
+
+
+	app.post("/user/bin", async (req, res) => {
+        let name = req.body.name;
+        let content = req.body.content;
+
+
+        try{
+            const mail = await jwt.verify(req.query.accessToken, "e1231");
+
+            db.collection("members").find({
+                mail,
+            }).toArray((err, documents) => {
+
+                let user = documents[0];
+                let buffer =  Buffer.from(content, 'base64')
+                fs.writeFileSync(__dirname + `/datas/binaries/${name}`, buffer)
+
+
+                db.collection("binaries").insertOne({
+                    "path" : name,
+                    "author" : user.mail,
+                    "lastmodified" : "25/02/20 - 17:35"
+                });
+
+                res.status(200);
+                res.end();
+            });
+
+        } catch (e) {
+            console.error(e)
+        }
+
+
+    });
 
     app.get("/images/:collection", (req, res) => {
 	try {
@@ -412,15 +447,15 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
 	}
 	});
 
-	let upload  = multer({dest:'datas/binaires/'})
+	let upload  = multer({dest:'datas/binaires/'});
 
 	app.post('/file',upload.single('file'), (req, res, next) => {
-		const file = req.file
+		const file = req.file;
 		console.log("server file");
 		console.log(file);
 		if(!file){
-			const error = new Error("Please upload a file")
-			error.httpStatusCode = 400
+			const error = new Error("Please upload a file");
+			error.httpStatusCode = 400;
 			return next(error)
 		}
 		res.send(file);

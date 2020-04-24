@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-upload',
@@ -8,24 +9,44 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UploadComponent implements OnInit {
   arbre;
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient,
+              private authService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
   }
 
-  selectFile(event){
-    if(event.target.files.length > 0){
+  toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  selectFile(event) {
+    if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.arbre = file;
-      console.log("if select file"+this.arbre);
+      console.log('if select file' + this.arbre);
     }
   }
 
-  onSubmit(){
-    const formData = new FormData();
-    formData.append('file',this.arbre);
-    console.log("File: "+formData);
-    this.http.post<any>('http://localhost:8888/file',formData).subscribe(
+  async onSubmit() {
+
+
+    let file = document.querySelector('#myfile')['files'][0];
+
+    this.http.post('http://localhost:8888/user/bin', {
+      name: file.name,
+      content: await this.toBase64(file),
+    }, {
+      params: {
+        accessToken: localStorage.getItem('token')
+      }
+    }).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

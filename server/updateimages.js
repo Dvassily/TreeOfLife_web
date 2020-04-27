@@ -4,6 +4,7 @@ const path = require('path');
 const url = "mongodb://localhost:27017";
 
 const imagedir = "datas/images";
+
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("TOL");
     db.collection("images").remove({});
@@ -60,11 +61,11 @@ function splitFileName(imageFile) {
     let index = -1;
     let taxon = null;
     let extension = null;
-    
+
     let tokens = imageFile.split(".");
     let withoutExtension = tokens[0];
     extension = tokens[1];
-    
+
     tokens = withoutExtension.split("_");
 
     if (tokens.length > 1) {

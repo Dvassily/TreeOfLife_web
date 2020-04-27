@@ -25,15 +25,11 @@ export class AuthenticationComponent implements OnInit {
 
     this.authenticationService.login(this.mailAddress, this.password).subscribe((res: any) => {
       if (Object.keys(res).length > 0) {
-
-        localStorage.setItem("token", res.accessToken)
+        localStorage.setItem("token", res.accessToken);
 
         this.authenticationService.getUser(res.accessToken).subscribe(res => {
           this.authenticationService.user.next(res);
-
-          console.log(res)
         });
-
       } else {
         this.invalidId = true;
       }

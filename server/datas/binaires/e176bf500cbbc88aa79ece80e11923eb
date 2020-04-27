@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TaxonTreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <HasChildrenWithImage>true</HasChildrenWithImage>
+  <Taxon Name="Foo" Flags="0" HasSound="false" FrenchName="Bar" ClassicRank="InfraRegne" Age="0" RelativeGeneticDistance="0" OTTID="0" RedListCategory="LeastConcern" />
+  <Children>
+    <TaxonTreeNode>
+      <HasChildrenWithImage>true</HasChildrenWithImage>
+      <Taxon Name="Bar" Flags="0" HasSound="false" FrenchName="" ClassicRank="None" Age="0" RelativeGeneticDistance="0" OTTID="0" RedListCategory="NotEvaluated" />
+      <Children />
+    </TaxonTreeNode>
+  </Children>
+</TaxonTreeNode>

@@ -1,0 +1,13 @@
+form#upload-form {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+}
+
+input#file-input {
+    display: block;
+}
+
+button#submit-button {
+    display: block;
+}

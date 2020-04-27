@@ -1,11 +1,7 @@
 <h2 class="bg-info text-white" style="text-align: center;">Déposer votre arbre</h2>
 <div style="text-align: center;">
-    <form>
-        <div>
-            <input type="file" name="arbre" multiple (change) = "selectFile($event)"/>
-        </div>
-        <div>
-            <button class="btn btn-danger" type="submit" (click)="onSubmit()">Déposer</button>
-        </div>
-    </form>
+  <form id="upload-form" [formGroup]="uploadForm" (ngSubmit)="onFileSubmit()">
+    <input id="file-input" type="file" name="binary" (change)="selectFile($event)"/>
+    <button id="submit-button" class="btn btn-danger" type="submit">Déposer</button>
+  </form>
 </div>

@@ -22,7 +22,6 @@ export class AuthenticationService {
 
   logout() {
     this.user.next(null);
-    localStorage.setItem("tata", "tets")
     localStorage.removeItem("token");
     console.log('testa')
   }

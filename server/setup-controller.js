@@ -10,7 +10,6 @@ module.exports = function(app, db, dlOptions) {
     	});
     });
 
-    
     app.get('/appdata/:file', (req, res) => {
     	res.sendFile('appdata/' + req.params.file, dlOptions, function (err) {
     	    if (err) {
@@ -20,5 +19,9 @@ module.exports = function(app, db, dlOptions) {
     		console.log('Info: Sent binary /appdata/' + req.params.file);
     	    }
     	});
+    });
+
+    app.get('/state', (req, res) => {
+	res.end(JSON.stringify({ state : 'up' }));
     });
 }

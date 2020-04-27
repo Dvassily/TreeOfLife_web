@@ -1,25 +1,25 @@
 [
-    {
-	"collection_name" : "commentcollection_1",
-	"content" : [
-	    {
-		"taxon" : "Homo sapiens",
-		"comment" : "Homo sapiens.html"
-	    },
-	    {
-		"taxon" : "Felis silvestris catus",
-		"comment" : "Felis silvestris catus.html"
-	    }
-	],
-	"images" : [
-	    {
-		"taxon" : "Homo sapiens",
-		"images" : ["image1.jpg", "image2.jpg"]
-	    },
-	    {
-		"taxon" : "Felis silvestris catus",
-		"images" : ["image1.jpg" ]
-	    }
-	]
-    }
+    // {
+    // 	"collection_name" : "commentcollection_1",
+    // 	"content" : [
+    // 	    {
+    // 		"taxon" : "Homo sapiens",
+    // 		"comment" : "Homo sapiens.html"
+    // 	    },
+    // 	    {
+    // 		"taxon" : "Felis silvestris catus",
+    // 		"comment" : "Felis silvestris catus.html"
+    // 	    }
+    // 	],
+    // 	"images" : [
+    // 	    {
+    // 		"taxon" : "Homo sapiens",
+    // 		"images" : ["image1.jpg", "image2.jpg"]
+    // 	    },
+    // 	    {
+    // 		"taxon" : "Felis silvestris catus",
+    // 		"images" : ["image1.jpg" ]
+    // 	    }
+    // 	]
+    // }
 ]

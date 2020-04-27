@@ -1,35 +1,35 @@
 [
-    {
-	"collection_name" : "distantcollection_1",
-	"content" :
-	[
-	    {
-		"taxon" : "Homo sapiens",
-		"images" : [
-		    {
-			"id" : -1,
-			"file" : "Homo sapiens.jpg"
-		    }, {
-			"id" : 0,
-			"file" : "Homo sapiens_0.jpg"
-		    }, {
-			"id" : 1,
-			"file" : "Homo sapiens_1.jpg"
-		    }
-		]
-	    },
-	    {
-		"taxon" : "Felis silvestris catus",
-		"images" : [
-		    {
-			"id" : -1,
-			"file" : "Felis silvestris catus.jpg"
-		    }, {
-			"id" : 0,
-			"file" : "Felis silvestris catus_0.jpg"
-		    }
-		]
-	    }
-	]
-    }
+    // {
+    // 	"collection_name" : "distantcollection_1",
+    // 	"content" :
+    // 	[
+    // 	    {
+    // 		"taxon" : "Homo sapiens",
+    // 		"images" : [
+    // 		    {
+    // 			"id" : -1,
+    // 			"file" : "Homo sapiens.jpg"
+    // 		    }, {
+    // 			"id" : 0,
+    // 			"file" : "Homo sapiens_0.jpg"
+    // 		    }, {
+    // 			"id" : 1,
+    // 			"file" : "Homo sapiens_1.jpg"
+    // 		    }
+    // 		]
+    // 	    },
+    // 	    {
+    // 		"taxon" : "Felis silvestris catus",
+    // 		"images" : [
+    // 		    {
+    // 			"id" : -1,
+    // 			"file" : "Felis silvestris catus.jpg"
+    // 		    }, {
+    // 			"id" : 0,
+    // 			"file" : "Felis silvestris catus_0.jpg"
+    // 		    }
+    // 		]
+    // 	    }
+    // 	]
+    // }
 ]

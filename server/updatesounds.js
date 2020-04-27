@@ -23,4 +23,5 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
     });
 
     console.log("Done !");
+    process.exit(0);
 });

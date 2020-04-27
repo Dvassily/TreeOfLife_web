@@ -5,6 +5,7 @@ const url = "mongodb://localhost:27017";
 
 const imagedir = "datas/images";
 
+
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("TOL");
     db.collection("images").remove({});
@@ -42,19 +43,8 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 	    db.collection("images").insertOne(document);
 	    console.log(collectionDirectory + " : Done !");
     });
-	// console.log(collectionsDirectories);
-	// collectionsDirectories.forEach(function(collectionDirectory) {
 
-	//     if (collectionDirectory === "distantcollection_1") {
-	// 	fs.readdir(imagedir + "/" + collectionDirectory, function (err, imagesFiles) {
-	// 	    imagesFiles.forEach(function(imageFile) {
-	// 		console.log(imageFile);
-	// 	    });
-	// 	});
-	//     }
-	//     db.collection("images").insertOne(document);
-    // 	});
-    // });
+    process.exit(0);
 });
 
 function splitFileName(imageFile) {

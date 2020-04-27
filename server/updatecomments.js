@@ -52,6 +52,7 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 	db.collection("comments").insertOne(document);
 
 	console.log(collectionDirectory + " : Done !");
+	process.exit(0);
     });
 });
 				 

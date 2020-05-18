@@ -6,9 +6,13 @@ const url = "mongodb://localhost:27017";
 const commentsdir = "datas/comments";
 
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-    let db = client.db("TOL");
-    db.collection("comments").remove({});
+    fillDatabase(client.db("TOL"));
+});
 
+async function fillDatabase(db) {
+    await db.collection("comments").remove({});
+
+    let collections = []
     collectionsDirectories = fs.readdirSync(commentsdir);
     collectionsDirectories.forEach(function(collectionDirectory) {
 	let document = {
@@ -47,13 +51,15 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 
 		}
 	    }
+
 	});
 
-	db.collection("comments").insertOne(document);
-
+	collections.push(document);
 	console.log(collectionDirectory + " : Done !");
-	process.exit(0);
     });
-});
-				 
+
+    await db.collection("comments").insertMany(collections);
+    process.exit(0);
+}
+
 				 

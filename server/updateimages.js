@@ -5,47 +5,54 @@ const url = "mongodb://localhost:27017";
 
 const imagedir = "datas/images";
 
-
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-    let db = client.db("TOL");
-    db.collection("images").remove({});
+    fillDatabase(client.db("TOL"));
+});
+
+async function fillDatabase(db) {
+    await db.collection("images").remove({});
 
     collectionsDirectories = fs.readdirSync(imagedir);
+
+    let collections = []
     collectionsDirectories.forEach(function(collectionDirectory) {
-	    let currentTaxon = undefined;
-	    let document = {
-		"collection_name" : collectionDirectory,
-		"content" : []
-	    };
+	let currentTaxon = undefined;
+	let document = {
+	    "collection_name" : collectionDirectory,
+	    "content" : []
+	};
 
-	    imageFiles = fs.readdirSync(imagedir + "/" + collectionDirectory);
-	    imageFiles.forEach(function (imageFile) {
-		imageSplit = splitFileName(imageFile);
+	imageFiles = fs.readdirSync(imagedir + "/" + collectionDirectory);
+	imageFiles.forEach(function (imageFile) {
+	    imageSplit = splitFileName(imageFile);
 
-		if (currentTaxon === imageSplit.taxon) {
-		    document.content[document.content.length - 1].images.push({
+	    if (currentTaxon === imageSplit.taxon) {
+		document.content[document.content.length - 1].images.push({
+		    "id" : imageSplit.index,
+		    "file" : imageFile
+		});
+	    } else {
+		currentTaxon = imageSplit.taxon;
+		
+		document.content.push({
+		    "taxon" : imageSplit.taxon,
+		    "images" : [ {
 			"id" : imageSplit.index,
 			"file" : imageFile
-		    });
-		} else {
-		    currentTaxon = imageSplit.taxon;
+		    }]
+		});
+	    }
+	});
 
-		    document.content.push({
-			"taxon" : imageSplit.taxon,
-			"images" : [ {
-			    "id" : imageSplit.index,
-			    "file" : imageFile
-			}]
-		    });
-		}
-	    });
+	collections.push(document);
 
-	    db.collection("images").insertOne(document);
-	    console.log(collectionDirectory + " : Done !");
+	console.log(collectionDirectory + " : Done !");
     });
 
+    await db.collection("images").insertMany(collections);
+
     process.exit(0);
-});
+}
 
 function splitFileName(imageFile) {
     let index = -1;

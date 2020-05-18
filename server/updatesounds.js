@@ -6,10 +6,13 @@ const url = "mongodb://localhost:27017";
 const soundsDir = "datas/sounds";
 
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-    let db = client.db("TOL");
+    fillDatabase(client.db("TOL"));
+});
 
-    db.collection("sounds").remove({});
+async function fillDatabase(db) {
+    await db.collection("sounds").remove({});
 
+    sounds = []
     soundsFiles = fs.readdirSync(soundsDir);
     soundsFiles.forEach(function(file) {
 	if (! file.endsWith(".wma")) {
@@ -17,11 +20,14 @@ MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 	}
 
 	let tokens = file.split(".");
-	db.collection("sounds").insertOne({
+	sounds.push({
 	    "name" : tokens[0]
 	});
+	
     });
+
+    db.collection("sounds").insertMany(sounds);
 
     console.log("Done !");
     process.exit(0);
-});
+}

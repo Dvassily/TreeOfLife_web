@@ -1,0 +1,46 @@
+
+
+<div class="bg-image"></div>
+<div class="bg-darkback"></div>
+
+<div class="bg-text vh-100 d-flex justify-content-center align-items-center">
+  <div class="card p-4">
+    <div class="card-header ">
+      <h5 class="card-title">Inscription</h5>
+      <p class="card-category">Entrer vos Information pour vous inscrire</p>
+    </div>
+    <div class="card-body ">
+      <form>
+        <hr>
+        <strong class="text-danger" *ngIf="error">
+          * Erreure lors de l'inscription
+        </strong>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nom</label>
+          <input id="name" name="name" type="text" class="form-control" placeholder="Nom" [(ngModel)]="name">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Prenom</label>
+          <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Prenom" [(ngModel)]="lastName">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input name="mail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="mail">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mot de Passe</label>
+          <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="password">
+        </div>
+
+
+        <button (click)="onRegister()" type="submit" class="btn btn-primary">Envoyer</button>
+        <hr>
+      </form>
+    </div>
+
+  </div>
+
+</div>

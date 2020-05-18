@@ -1,5 +1,5 @@
 module.exports = function(app, db, jwt) {
-    
+
     app.get("/user", async (req, res) => {
 
     	try{
@@ -71,6 +71,7 @@ module.exports = function(app, db, jwt) {
     app.post("/auth/register", (req, res) => {
     	const mail = req.body.mail;
     	const password = req.body.password;
+    	const userData = req.body;
 
 
     	try{
@@ -87,7 +88,9 @@ module.exports = function(app, db, jwt) {
     		db.collection("members").insertOne({
     		    mail : req.body.mail,
     		    password : req.body.password,
-                    role : "etudiant"
+                name: req.body.name,
+                lastName: req.body.lastName,
+                role : "etudiant"
     		});
 
     		const accessToken = jwt.sign(mail, "e1231");

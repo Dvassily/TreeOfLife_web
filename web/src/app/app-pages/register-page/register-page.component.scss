@@ -1,0 +1,42 @@
+
+
+.bg-image {
+  /* The image used */
+  background: url("/assets/img/backstudent.jpg");
+
+  /* Add the blur effect */
+  filter: blur(15px);
+  -webkit-filter: blur(15px);
+
+  /* Full height */
+  width: 100vw;
+  height: 100vh;
+
+  /* Center and scale the image nicely */
+  background-repeat:no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+
+/* Position text in the middle of the page/image */
+.bg-darkback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: rgba(0,0,0,.3);
+}
+
+.bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}

@@ -22,15 +22,11 @@ export class AuthenticationService {
 
   logout() {
     this.user.next(null);
-    localStorage.removeItem("token");
-    console.log('testa')
+    localStorage.removeItem('token');
   }
 
-  register(email: string, password: string) {
-    return this.http.post(AuthenticationService.dbUrl + 'auth/register', {
-      mail: email,
-      password,
-    });
+  register(form) {
+    return this.http.post(AuthenticationService.dbUrl + 'auth/register', form);
   }
 
 
@@ -40,6 +36,16 @@ export class AuthenticationService {
         accessToken,
       }
     });
+  }
+
+  isAuthenticated() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return true;
+    }
+
+    return false;
   }
 
 }

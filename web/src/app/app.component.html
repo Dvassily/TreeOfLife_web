@@ -1,15 +1,1 @@
-
-<app-authentication></app-authentication>
-
-<router-outlet *ngIf="user | async"></router-outlet>
-<div class="container">
-  <div *ngIf="! (user | async)" class="jumbotrons">
-    <h1>Authentification requise</h1>
-    <div>
-      Veuillez vous connecter ou créer un compte pour accéder au contenu.
-    </div>
-    <app-inscription></app-inscription>
-
-  </div>
-
-</div>
+<router-outlet></router-outlet>

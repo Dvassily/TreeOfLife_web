@@ -30,4 +30,11 @@ export class BinariesService {
     return this.http.post<any>(BinariesService.dbUrl + 'binaries/', formData);
   }
 
+  delete(path: string) {
+    return this.http.delete<any>(BinariesService.dbUrl + 'binaries/', {
+      params: {
+        path,
+      }
+    });
+  }
 }

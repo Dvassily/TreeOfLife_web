@@ -1,0 +1,42 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Gestion Arbres</h5>
+        <p class="card-category">Vous pouvez gerer votre arbre en ligne</p>
+      </div>
+      <div class="card-body ">
+
+        <div class="d-flex justify-content-end">
+
+          <form id="upload-form" [formGroup]="uploadForm">
+            <input id="file-input" type="file" name="binary" (change)="selectFile($event)" style="display: none"/>
+            <button onclick="document.getElementById('file-input').click();" id="submit-button" type="submit" class="btn btn-round btn-success"><i class="nc-icon nc-simple-add"></i> </button>
+          </form>
+
+
+        </div>
+        <div  class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+            <th>Fichier</th>
+            <th>Auteur</th>
+            <th>Derniere modification</th>
+            <th>Action</th>
+            </thead>
+            <tbody >
+            <tr *ngFor="let binary of userBinaries">
+              <td><a href="{{download(binary.hashedPath)}}">{{binary.path}}</a></td>
+              <td>{{binary.author}}</td>
+              <td>{{binary.lastmodified}}</td>
+              <td><button (click)="onDeleteTree(binary.hashedPath)" class="btn btn-round btn-danger"><i class="nc-icon nc-basket"></i> </button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

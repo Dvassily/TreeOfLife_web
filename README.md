@@ -10,7 +10,9 @@ This repository contains the sources of the backend of TreeOfLife and the web ap
 
 # To run the server :
 
-First you must to initialize the database :
+First you need to download image, comments and sounds datas from : https://my.pcloud.com/publink/show?code=XZLdVMkZwr1t5TvEry0VLYUdFtqz4p3yjNLX and unzip them in ../server/datas/
+
+Then, you must to initialize the database :
 ```bash
     cd database
     sh createdb.sh

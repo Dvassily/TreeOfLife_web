@@ -22,11 +22,14 @@ app.use(express.static('datas'));
 app.use(bodyParser.json({limit: '400mb'}));
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(express.static(process.cwd()+"/public/"));
 
 const dlOptions = {
     root : __dirname + '/datas',
     dotfiles: 'deny'
 };
+
+
 
 // setup db and routes
 const url = "mongodb://localhost:27017";
@@ -41,41 +44,10 @@ MongoClient.connect(url, {useNewUrlParser: true , useUnifiedTopology: true }, (e
     require('./setup-controller')(app, db, dlOptions);
 
 
-    // auth and login
+    app.get("*", function(req, req) {
+	res.sendFile(process.cwd() + "public/index.html");
+    });
 
-    // 	app.post("/user/bin", async (req, res) => {
-    //     let name = req.body.name;
-    //     let content = req.body.content;
-
-
-    //     try{
-    //         const mail = await jwt.verify(req.query.accessToken, "e1231");<
-
-    //         db.collection("members").find({
-    //             mail,
-    //         }).toArray((err, documents) => {
-
-    //             let user = documents[0];
-    //             let buffer =  Buffer.from(content, 'base64')
-    //             fs.writeFileSync(__dirname + `/datas/binaries/${name}`, buffer)
-
-
-    //             db.collection("binaries").insertOne({
-    //                 "path" : name,
-    //                 "author" : user.mail,
-    //                 "lastmodified" : "25/02/20 - 17:35"
-    //             });
-
-    //             res.status(200);
-    //             res.end();
-    //         });
-
-    //     } catch (e) {
-    //         console.error(e)
-    //     }
-
-
-    // });
 });
 
 app.listen(8888);

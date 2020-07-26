@@ -6,12 +6,10 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
-  private static readonly dbUrl = 'http://localhost:8888/';
+  private static readonly dbUrl = 'http://3.227.19.232/';
   public user: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) { }
-
-
 
   login(email: string, password: string) {
     return this.http.post(AuthenticationService.dbUrl + 'auth/login', {

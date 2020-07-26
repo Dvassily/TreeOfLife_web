@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class BinariesService {
-  private static readonly dbUrl = 'http://localhost:8888/';
+  private static readonly dbUrl = 'http://3.227.19.232/';
   constructor(private http : HttpClient) { }
 
   findAll() : Observable<any> {
